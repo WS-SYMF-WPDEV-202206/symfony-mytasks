@@ -7,17 +7,6 @@
 
     {{ include('tasks/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <section>
-        {% for form in formActions %}
-            <div class="md-3">
-                {{ form_start(form) }}
-                    {{ form_row(form.status) }}
-                    {{ form_row(form.description) }}
-                {{ form_end(form) }}
-            </div>
-        {% endfor %}
-    </section>
-
     <a href="{{ path('app_tasks_index') }}">back to list</a>
 
     {{ include('tasks/_delete_form.html.twig') }}

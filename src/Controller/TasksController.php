@@ -83,11 +83,11 @@ class TasksController extends AbstractController
         $formActions = [];
         foreach ($task->getActions() as $action) {
             $formAction = $this->createForm(ActionsType::class, $action);
-            $formActions[] = $formAction;
+            $formActions[] = $formAction->createView();
             unset($formAction);
         }
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form);die;
+            dump($form, $request);die;
             $tasksRepository->add($task, true);
 
             return $this->redirectToRoute('app_tasks_index', [], Response::HTTP_SEE_OTHER);

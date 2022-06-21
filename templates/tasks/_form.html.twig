@@ -1,4 +1,13 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <section class="col-12">
+        <h3>Liste des actions</h3>
+        {% for form in formActions %}
+            <div class="mb-3 flex-column flex-nowrap">
+                {{ form_row(form.status) }}
+                {{ form_row(form.description) }}
+            </div>
+        {% endfor %}
+    </section>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -23,7 +23,7 @@ class Actions
     private $status;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $description;
 
