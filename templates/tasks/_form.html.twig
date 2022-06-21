@@ -1,6 +1,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <section class="col-12">
+    <section id="actions_section" class="col-12">
         <h3>Liste des actions</h3>
         {% for form in formActions %}
             <div class="mb-3 flex-column flex-nowrap">
@@ -9,6 +9,38 @@
                 {{ form_row(form.id, {'full_name': 'actions['~loop.index0~'][id]'}) }}
             </div>
         {% endfor %}
+        <input type="hidden" id="initial_max_index" value="{{ formActions|length -1 }}">
     </section>
+    <button id="addAction" class="btn btn-info">+</button>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+{% block javascripts %}
+    <script>
+        var plusButton = document.getElementById('addAction');
+        plusButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            // initialiser l'index
+            var index = document.getElementById('initial_max_index').value + 1;
+            // construire l'élément HTML
+            var div_to_insert = document.createElement('div');
+            div_to_insert.classList.add('mb-3');
+            div_to_insert.classList.add('flex-column');
+            div_to_insert.classList.add('flex-nowrap');
+            var checkbox_to_insert = document.createElement('div');
+            checkbox_to_insert.innerHTML = `
+            <label for="actions_status"> </label><input type="checkbox" id="actions_status" name="actions[`+ index +`][status]" value="">
+            `;
+            // Insertion de la checkbox
+            div_to_insert.appendChild(checkbox_to_insert);
+            var text_to_insert = document.createElement('div');
+            text_to_insert.innerHTML = `
+            <label for="actions_description"> </label><input type="text" id="actions_description" name="actions[`+ index +`][description]" value="">
+            `;
+            // Insertion du champ texte
+            div_to_insert.appendChild(text_to_insert);
+            // Ajout dans la section
+            document.getElementById('actions_section').appendChild(div_to_insert);
+            document.getElementById('initial_max_index').value = index;
+        });
+    </script>
+{% endblock %}
