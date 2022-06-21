@@ -6,6 +6,7 @@ use App\Entity\Actions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,7 @@ class ActionsType extends AbstractType
                 'label' => ' ',
                 'required' => false
             ])
+            ->add('id', HiddenType::class)
         ;
     }
 

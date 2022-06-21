@@ -41,7 +41,7 @@ class Tasks
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="task", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Actions::class, mappedBy="task", orphanRemoval=true, cascade={"persist"})
      */
     private $actions;
 

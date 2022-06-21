@@ -38,6 +38,14 @@ class Actions
         return $this->id;
     }
 
+    public function initiateAction($object): self
+    {
+        $this->id = isset($object['id']) ? $object['id'] : null;
+        $this->status = isset($object['status']) ? $object['status'] : false;
+        $this->description = isset($object['description']) ? $object['description'] : null;
+        return $this;
+    }
+
     public function isStatus(): ?bool
     {
         return $this->status;

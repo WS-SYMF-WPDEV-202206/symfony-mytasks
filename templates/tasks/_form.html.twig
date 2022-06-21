@@ -4,8 +4,9 @@
         <h3>Liste des actions</h3>
         {% for form in formActions %}
             <div class="mb-3 flex-column flex-nowrap">
-                {{ form_row(form.status) }}
-                {{ form_row(form.description) }}
+                {{ form_row(form.status, {'full_name': 'actions['~loop.index0~'][status]'}) }}
+                {{ form_row(form.description, {'full_name': 'actions['~loop.index0~'][description]'}) }}
+                {{ form_row(form.id, {'full_name': 'actions['~loop.index0~'][id]'}) }}
             </div>
         {% endfor %}
     </section>

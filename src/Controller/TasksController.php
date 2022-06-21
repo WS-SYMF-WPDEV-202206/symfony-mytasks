@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Actions;
 use App\Entity\Tasks;
 use App\Form\ActionsType;
 use App\Form\TasksType;
@@ -87,8 +88,12 @@ class TasksController extends AbstractController
             unset($formAction);
         }
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form, $request);die;
+            $actions = $request->request->get('actions');
+
+            $tasksRepository->associateAction($actions, $task);
+            
             $tasksRepository->add($task, true);
+
 
             return $this->redirectToRoute('app_tasks_index', [], Response::HTTP_SEE_OTHER);
         }

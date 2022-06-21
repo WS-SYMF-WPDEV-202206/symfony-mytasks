@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Actions;
 use App\Entity\Tasks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TasksRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $actionsRepository;
+
+    public function __construct(ManagerRegistry $registry, ActionsRepository $actionsRepository)
     {
         parent::__construct($registry, Tasks::class);
+        $this->actionsRepository = $actionsRepository;
     }
 
     public function add(Tasks $entity, bool $flush = false): void
@@ -61,6 +65,22 @@ class TasksRepository extends ServiceEntityRepository
            ->getQuery()
            ->getResult()
            ;
+    }
+
+    public function associateAction($actions, $task) 
+    {
+        foreach ($actions as $key => $action) {
+            if(isset($action['id']))
+            {
+                $currentAction = $this->actionsRepository->find($action['id']);
+            }
+            else
+            {
+                $currentAction = new Actions();
+            }
+            $actions[$key] = $currentAction->initiateAction($action);
+            $task->addAction($actions[$key]);
+        }
     }
 //    /**
 //     * @return Tasks[] Returns an array of Tasks objects
